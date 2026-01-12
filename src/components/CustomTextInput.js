@@ -1,11 +1,17 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, TextInput, View } from "react-native";
+import React from "react";
 
-const CustomTextInput = ({title,isSecureText,handleOnChangeText,handleValue,handlePlaceholder}) => {
+const CustomTextInput = ({
+  title,
+  isSecureText,
+  handleOnChangeText,
+  handleValue,
+  handlePlaceholder,
+}) => {
   return (
     <View style={styles.inputContainer}>
       <Text style={styles.inputBoxText}>{title}</Text>
-      <TextInput 
+      <TextInput
         // inputMode='email'
         secureTextEntry={isSecureText}
         placeholder={handlePlaceholder}
@@ -14,24 +20,27 @@ const CustomTextInput = ({title,isSecureText,handleOnChangeText,handleValue,hand
         value={handleValue}
       />
     </View>
-  )
-}
+  );
+};
 
-export default CustomTextInput
+export default CustomTextInput;
 
 const styles = StyleSheet.create({
-    inputContainer:{
-        width:'80%',
-
-    },
-    inputBoxText:{
-        fontWeight:'bold',
-        alignSelf:'flex-start',
-        color:'white'
-    },
-    textInputStyle:{
-        borderBottomWidth:0.5,
-        borderBlockColor:'white',
-        width:'100%'
-    }
-})
+  inputContainer: {
+    width: "80%",
+    marginBottom: 15,
+  },
+  inputBoxText: {
+    fontWeight: "bold",
+    alignSelf: "flex-start",
+    color: "white",
+    marginBottom: 4,
+  },
+  textInputStyle: {
+    borderBottomWidth: 1,
+    borderBottomColor: "white",
+    width: "100%",
+    color: "white",
+    paddingVertical: 6,
+  },
+});

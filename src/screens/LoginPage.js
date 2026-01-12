@@ -1,30 +1,42 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, Image } from "react-native";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setEmail, setPassword, setIsLoading } from "../redux/userSlice";
+import {
+  setEmail,
+  setPassword,
+  setIsLoading,
+  setLogin,
+} from "../redux/userSlice";
 import { Loading, CustomTextInput, CustomButton } from "../components";
 import { useNavigation } from "@react-navigation/native";
+import { login } from "../redux/userSlice";
 
 const LoginPage = ({}) => {
-  const { email, password, isLoading } = useSelector((state) => state.user);
+  const { isLoading } = useSelector((state) => state.user);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>Welcome</Text>
-      {/* <Image  source={require('../')} style={styles.image}/> */}
+      <Image
+        source={require("../../assets/images/login.png")}
+        style={styles.image}
+      />
       <CustomTextInput
         title="Email"
         isSecureText={false}
-        handleOnChangeText={(text) => dispatch(setEmail(text))}
+        handleOnChangeText={(email) => setEmail(email)}
         handleValue={email}
         handlePlaceholder="Enter your email"
       />
       <CustomTextInput
         title="Password"
         isSecureText={true}
-        handleOnChangeText={(text) => dispatch(setPassword(text))}
+        handleOnChangeText={(password) => setPassword(password)}
         handleValue={password}
         handlePlaceholder="Enter your password"
       />
@@ -32,7 +44,7 @@ const LoginPage = ({}) => {
       <CustomButton
         buttonText="Login"
         setWidth="80%"
-        handleOnPressed={() => dispatch(setIsLoading(true))}
+        handleOnPressed={() => dispatch(login({ email, password }))}
         buttonColor="blue"
         pressedButtonColor="grey"
       />
@@ -40,8 +52,8 @@ const LoginPage = ({}) => {
         buttonText="SignUp"
         setWidth="30%"
         handleOnPressed={() => navigation.navigate("Signup")}
-        buttonColor="blue"
-        pressedButtonColor="grey"
+        buttonColor="gray"
+        pressedButtonColor="lightgrey"
       />
 
       {isLoading ? (

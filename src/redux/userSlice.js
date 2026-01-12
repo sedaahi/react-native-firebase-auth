@@ -3,12 +3,13 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export const login = createAsyncThunk(
   "user/login",
-  async ({ username, password }) => {
+  async ({ email, password }) => {
+    console.log(password)
     try {
       const auth = getAuth(); // giriş yap
       const userCredential = await signInWithEmailAndPassword(
         auth,
-        username,
+        email,
         password
       ); // giriş bilgilerini kontrol et
 
@@ -28,8 +29,8 @@ export const login = createAsyncThunk(
 );
 
 const initialState = {
-  email: null,
-  password: null,
+  // email: null,
+  // password: null,
   isLoading: false,
   isAuth: false,
   token:null,
@@ -52,17 +53,17 @@ export const userSlice = createSlice({
     setIsLoading: (state, action) => {
       state.isLoading = action.payload;
     },
-    setLogin: (state, action) => {
-      if (
-        state.email === state.users.userEmail &&
-        state.password === state.users.userPassword
-      ) {
-        console.log(true);
-        state.isAuth = true;
-      } else {
-        console.log(false);
-      }
-    },
+    // setLogin: (state, action) => {
+    //   if (
+    //     state.email === state.users.userEmail &&
+    //     state.password === state.users.userPassword
+    //   ) {
+    //     console.log(true);
+    //     state.isAuth = true;
+    //   } else {
+    //     console.log(false);
+    //   }
+    // },
   },
   extraReducers:(builder)=>{
     builder
@@ -84,6 +85,6 @@ export const userSlice = createSlice({
   }
 });
 
-export const { setEmail, setPassword, setIsLoading, setLogin } =
+export const { setEmail, setPassword, setLogin } =
   userSlice.actions;
 export default userSlice.reducer;

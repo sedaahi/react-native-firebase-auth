@@ -1,17 +1,22 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
 import React from "react";
-import { setIsLoading } from "../redux/userSlice";
 
-const CustomButton = ({buttonText,setWidth,handleOnPressed,buttonColor,pressedButtonColor}) => {
+const CustomButton = ({
+  buttonText,
+  setWidth,
+  handleOnPressed,
+  buttonColor,
+  pressedButtonColor,
+}) => {
   return (
     <Pressable
-      onPress={() => handleOnPressed()}
+      onPress={handleOnPressed}
       style={({ pressed }) => [
-        {
-          backgroundColor: pressed ? {pressedButtonColor}: {buttonColor},
-          width: {setWidth},
-        },
         styles.button,
+        {
+          backgroundColor: pressed ? pressedButtonColor : buttonColor,
+          width: setWidth, // "80%" gibi stringse böyle olmalı
+        },
       ]}
     >
       <Text style={styles.buttonText}>{buttonText}</Text>

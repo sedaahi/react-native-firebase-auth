@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 import AuthNavigation from "./AuthNavigation";
 import UserNavigation from "./UserNavigation";
+import app from "../../firebaseConfig";
 
 export default function RootNavigation() {
   const { isAuth } = useSelector((state) => state.user);
