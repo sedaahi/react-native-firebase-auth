@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setEmail,
@@ -9,13 +9,18 @@ import {
 } from "../redux/userSlice";
 import { Loading, CustomTextInput, CustomButton } from "../components";
 import { useNavigation } from "@react-navigation/native";
-import { login } from "../redux/userSlice";
+import { login, autoLogin } from "../redux/userSlice";
 
 const LoginPage = ({}) => {
   const { isLoading } = useSelector((state) => state.user);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  //KULLANICI daha önce giriş yaptıysa kontrol et ve otomatik giriş yap
+  useEffect(()=>{
+    dispatch(autoLogin())
+  },[])
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
