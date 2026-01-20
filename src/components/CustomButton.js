@@ -10,7 +10,7 @@ const CustomButton = ({
 }) => {
   return (
     <Pressable
-      onPress={()=>handleOnPressed()}
+      onPress={() => handleOnPressed()}
       style={({ pressed }) => [
         styles.button,
         {

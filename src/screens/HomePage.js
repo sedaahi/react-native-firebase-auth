@@ -1,4 +1,11 @@
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import {
   collection,
@@ -12,6 +19,16 @@ import { db } from "../../firebaseConfig";
 import { CustomButton } from "../components";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/userSlice";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Animated, {
+  FadeInDown,
+  FlipInEasyX,
+  FlipInEasyY,
+  FlipOutEasyX,
+  FlipOutEasyY,
+  Layout,
+  LightSpeedInRight,
+} from "react-native-reanimated";
 
 const HomePage = () => {
   const [data, setData] = useState([]);
@@ -69,14 +86,27 @@ const HomePage = () => {
     }
   };
 
-
   //KULLANICI ÇIKIŞ İŞLEMLERİ
-  const handleLogout = ()=>{
-    dispatch(logout())
-  }
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
+  const renderItem = ({ item, index }) => {
+    return (
+      <Animated.View
+        style={styles.flatListContainer}
+        // entering={FadeInDown.duration(250).delay(index * 100)}
+        entering={FlipInEasyY.duration(500).delay(index * 100)}
+      >
+        <Text>{item.title}</Text>
+        {/* istersen */}
+        {/* <Text>{item.lesson}</Text> */}
+      </Animated.View>
+    );
+  };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <TextInput
         value={updateTheData}
         onChangeText={setUpdateTheData}
@@ -90,7 +120,7 @@ const HomePage = () => {
         }}
       />
 
-      {data &&
+      {/* {data &&
         data.map((x, i) => (
           <Pressable
             key={i}
@@ -104,10 +134,16 @@ const HomePage = () => {
             <Text>{i}</Text>
             <Text>ID: {x.id}</Text>
             <Text>{x.lesson}</Text>
-            {/* <Text>{x.content}</Text> */}
           </Pressable>
-        ))}
-      <Text>HomePage</Text>
+        ))} */}
+
+      <Animated.FlatList
+      entering={LightSpeedInRight.duration(300)}
+        style={styles.flatList}
+        data={data}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+      />
 
       <CustomButton
         buttonText="Save"
@@ -147,7 +183,7 @@ const HomePage = () => {
         pressedButtonColor="lightgrey"
         handleOnPressed={handleLogout}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -159,5 +195,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "tomato",
+  },
+  flatListContainer: {
+    borderWidth: 3,
+    margin: 5,
+    borderColor: "blue",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  flatList: {
+    width: "90%",
+    borderWidth: 3,
+    paddingH: 10,
+    borderColor: "green",
+    backgroundColor: "lightgray",
   },
 });
